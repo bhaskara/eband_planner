@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner
+END
+eband_visualization.h
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner/eband_visualization.h
+END
+conversions_and_types.h
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner/conversions_and_types.h
+END
+eband_local_planner.h
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner/eband_local_planner.h
+END
+eband_trajectory_controller.h
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner/eband_trajectory_controller.h
+END
+eband_local_planner_ros.h
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/include/eband_local_planner/eband_local_planner_ros.h
+END

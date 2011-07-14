@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/stage_launch
+END
+move_base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/stage_launch/move_base.xml
+END
+pr2_ompl_planner_base_stage.launch
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/stage_launch/pr2_ompl_planner_base_stage.launch
+END
+nav_view.xml
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/stage_launch/nav_view.xml
+END

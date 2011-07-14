@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src
+END
+conversions_and_types.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src/conversions_and_types.cpp
+END
+eband_local_planner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src/eband_local_planner.cpp
+END
+eband_trajectory_controller.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src/eband_trajectory_controller.cpp
+END
+eband_local_planner_ros.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src/eband_local_planner_ros.cpp
+END
+eband_visualization.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/src/eband_visualization.cpp
+END

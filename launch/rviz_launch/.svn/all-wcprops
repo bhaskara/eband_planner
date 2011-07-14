@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/rviz_launch
+END
+rviz_move_base.launch
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/rviz_launch/rviz_move_base.launch
+END
+move_base.vcg
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/wg-ros-pkg/!svn/ver/50707/branches/trunk_dturtle/sandbox/eband_local_planner/launch/rviz_launch/move_base.vcg
+END
