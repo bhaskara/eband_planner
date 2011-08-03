@@ -328,9 +328,9 @@ void EBandVisualization::forceToMarker(geometry_msgs::WrenchStamped wrench, geom
 		}
 		// create AngleAxis representation
 		rotation_axis.normalize(); // normalize vector -> otherwise AngleAxis will be invalid!
-		Eigen::eigen2_AngleAxisd rotate_aa(rotation_angle, rotation_axis);
-		// create Quaternion in Eigen from AngleAxis
-		Eigen::eigen2_Quaterniond rotate_quat(rotate_aa);
+                const double s = sin(rotation_angle/2);
+                const double c = cos(rotation_angle/2);
+                Eigen::Quaterniond rotate_quat(c, s*rotation_axis.x(), s*rotation_axis.y(), s*rotation_axis.z());
 	
 		// transform quaternion back from Eigen to ROS
 		tf::Quaternion orientation_tf;
