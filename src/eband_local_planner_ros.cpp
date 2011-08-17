@@ -134,6 +134,7 @@ void EBandPlannerROS::initialize(std::string name, tf::TransformListener* tf, co
 // set global plan to wrapper and pass it to eband
 bool EBandPlannerROS::setPlan(const std::vector<geometry_msgs::PoseStamped>& orig_global_plan)
 {
+    
 	// check if plugin initialized
 	if(!initialized_)
 	{

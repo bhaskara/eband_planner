@@ -58,6 +58,9 @@
 #include <angles/angles.h>
 #include <tf/tf.h>
 
+// PID control library
+#include <control_toolbox/pid.h>
+
 
 namespace eband_local_planner{
 
@@ -125,17 +128,21 @@ class EBandTrajectoryCtrl{
 		costmap_2d::Costmap2DROS* costmap_ros_; ///<@brief pointer to costmap
 		boost::shared_ptr<EBandVisualization> target_visual_; // pointer to visualization object
 
+    control_toolbox::Pid pid_;
+
 		// parameters
-		double k_p_, k_nu_, ctrl_freq_;
+                double k_p_, k_nu_, ctrl_freq_;
 		double acc_max_, virt_mass_;
 		double max_vel_lin_, max_vel_th_, min_vel_lin_, min_vel_th_;
 		double min_in_place_vel_th_;
 		double in_place_trans_vel_;
 		double tolerance_trans_, tolerance_rot_, tolerance_timeout_;
 		double acc_max_trans_, acc_max_rot_;
+                double rotation_in_place_threshold_; // Rotate in place if angular deviation is more than this
+                double rotation_distance_threshold_; // We'll only consider rotating in place initially if we're at least this far from goal
 
 		// flags
-		bool initialized_, band_set_, visualization_;
+                bool initialized_, band_set_, visualization_;
 
 		// data
 		std::vector<Bubble> elastic_band_;

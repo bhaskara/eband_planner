@@ -36,19 +36,26 @@
 *********************************************************************/
 
 #include <eband_local_planner/eband_trajectory_controller.h>
+#include <tf/transform_datatypes.h>
 
 
 namespace eband_local_planner{
+
+using std::min;
+using std::max;
 
 
 EBandTrajectoryCtrl::EBandTrajectoryCtrl() : costmap_ros_(NULL), initialized_(false), band_set_(false), visualization_(false) {}
 
 
 EBandTrajectoryCtrl::EBandTrajectoryCtrl(std::string name, costmap_2d::Costmap2DROS* costmap_ros)
- : costmap_ros_(NULL), initialized_(false), band_set_(false), visualization_(false)
+  : costmap_ros_(NULL), initialized_(false), band_set_(false), visualization_(false)
 {
 	// initialize planner
 	initialize(name, costmap_ros);
+
+  // Initialize pid object (note we'll be further clamping its output)
+  pid_.initPid(1, 0, 0, 10, -10);
 }
 
 
@@ -57,6 +64,7 @@ EBandTrajectoryCtrl::~EBandTrajectoryCtrl() {}
 
 void EBandTrajectoryCtrl::initialize(std::string name, costmap_2d::Costmap2DROS* costmap_ros)
 {
+
 	// check if trajectory controller is already initialized
 	if(!initialized_)
 	{
@@ -85,7 +93,7 @@ void EBandTrajectoryCtrl::initialize(std::string name, costmap_2d::Costmap2DROS*
 		node_private.param("virtual_mass", virt_mass_, 0.75);
 
 		node_private.param("max_translational_acceleration", acc_max_trans_, 0.5);
-		node_private.param("max_rotationale_acceleration", acc_max_rot_, 1.5);
+		node_private.param("max_rotational_acceleration", acc_max_rot_, 1.5);
 
 		// copy adress of costmap and Transform Listener (handed over from move_base)
 		costmap_ros_ = costmap_ros;
@@ -142,6 +150,24 @@ bool EBandTrajectoryCtrl::setOdometry(const nav_msgs::Odometry& odometry)
 	return true;
 }
 
+// Return the angular difference between the direction we're pointing
+// and the direction we want to move in
+double angularDiff (const geometry_msgs::Twist& heading,
+                    const geometry_msgs::Pose& pose)
+{
+  const double pi = 3.14159265;
+  const double t1 = atan2(heading.linear.y, heading.linear.x);
+  const double t2 = tf::getYaw(pose.orientation);
+  const double d = t1-t2;
+
+  if (fabs(d)<pi)
+    return d;
+  else if (d<0)
+    return d+2*pi;
+  else
+    return d-2*pi;
+}
+
 
 bool EBandTrajectoryCtrl::getTwist(geometry_msgs::Twist& twist_cmd)
 {
@@ -195,6 +221,8 @@ bool EBandTrajectoryCtrl::getTwist(geometry_msgs::Twist& twist_cmd)
 	// by default our control deviation is the difference between the bubble centers
 	double abs_ctrl_dev;
 	control_deviation = bubble_diff;
+
+
 	ang_pseudo_dist = control_deviation.angular.z * costmap_ros_->getCircumscribedRadius();
 	abs_ctrl_dev = sqrt( (control_deviation.linear.x * control_deviation.linear.x) +
 								(control_deviation.linear.y * control_deviation.linear.y) +
@@ -310,6 +338,37 @@ bool EBandTrajectoryCtrl::getTwist(geometry_msgs::Twist& twist_cmd)
 		new_bubble.expansion = 0.1; // just draw a small bubble
 		target_visual_->publishBubble("ctrl_target", 0, target_visual_->red, new_bubble);
 	}
+
+
+        const geometry_msgs::Point& goal = (--elastic_band_.end())->center.pose.position;
+        const double dx = elastic_band_.at(0).center.pose.position.x - goal.x;
+        const double dy = elastic_band_.at(0).center.pose.position.y - goal.y;
+        const double dist_to_goal = sqrt(dx*dx + dy*dy);
+        
+        // Assuming we're far enough from the final goal, make sure to rotate so
+        // we're facing the right way
+        if (dist_to_goal > 0.5)
+        {
+        
+          const double angular_diff = angularDiff(control_deviation, elastic_band_.at(0).center.pose);
+          const double vel = pid_.updatePid(-angular_diff, ros::Duration(1/ctrl_freq_));
+          const double mult = fabs(vel) > max_vel_th_ ? max_vel_th_/fabs(vel) : 1.0;
+          control_deviation.angular.z = vel*mult;
+          const double abs_vel = fabs(control_deviation.angular.z);
+
+          ROS_DEBUG_NAMED ("controller_state", "Angular diff is %.2f and desired angular vel is %.2f."
+                           " Initial translation velocity is %.2f, %.2f", angular_diff,
+                           control_deviation.angular.z, control_deviation.linear.x,
+                           control_deviation.linear.y);
+          const double trans_mult = max(0.01, 1.0 - abs_vel/max_vel_th_); // There are some weird tf errors if I let it be 0
+          control_deviation.linear.x *= trans_mult;
+          control_deviation.linear.y *= trans_mult;
+          ROS_DEBUG_NAMED ("controller_state", "Translation multiplier is %.2f and scaled translational"
+                           " velocity is %.2f, %.2f", trans_mult, control_deviation.linear.x,
+                           control_deviation.linear.y);
+        }
+
+        
 
 
 	// now the actual control procedure start (using attractive Potentials)
