@@ -95,6 +95,8 @@ void EBandTrajectoryCtrl::initialize(std::string name, costmap_2d::Costmap2DROS*
 		node_private.param("max_translational_acceleration", acc_max_trans_, 0.5);
 		node_private.param("max_rotational_acceleration", acc_max_rot_, 1.5);
 
+                node_private.param("rotation_correction_threshold", rotation_correction_threshold_, 0.1);
+
 		// copy adress of costmap and Transform Listener (handed over from move_base)
 		costmap_ros_ = costmap_ros;
 
@@ -347,7 +349,7 @@ bool EBandTrajectoryCtrl::getTwist(geometry_msgs::Twist& twist_cmd)
         
         // Assuming we're far enough from the final goal, make sure to rotate so
         // we're facing the right way
-        if (dist_to_goal > 0.5)
+        if (dist_to_goal > rotation_correction_threshold_)
         {
         
           const double angular_diff = angularDiff(control_deviation, elastic_band_.at(0).center.pose);

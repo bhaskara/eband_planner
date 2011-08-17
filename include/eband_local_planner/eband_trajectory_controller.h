@@ -138,8 +138,7 @@ class EBandTrajectoryCtrl{
 		double in_place_trans_vel_;
 		double tolerance_trans_, tolerance_rot_, tolerance_timeout_;
 		double acc_max_trans_, acc_max_rot_;
-                double rotation_in_place_threshold_; // Rotate in place if angular deviation is more than this
-                double rotation_distance_threshold_; // We'll only consider rotating in place initially if we're at least this far from goal
+                double rotation_correction_threshold_; // We'll do rotation correction if we're at least this far from the goal
 
 		// flags
                 bool initialized_, band_set_, visualization_;
