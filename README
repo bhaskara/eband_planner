@@ -1,1 +1,3 @@
 Forked from r52223 of https://code.ros.org/svn/wg-ros-pkg/branches/trunk_dturtle/sandbox/eband_local_planner/, originally written by Christian Connette, which in turn was based on Quinlan, S. and Khatib, O. "Elastic Bands: Connecting Path Planning and Robot Control." Proc. IEEE International Conference on Robotics and Automation, Atlanta, Georgia 1993, vol 2. pp. 802-807                                                                                                                                                    
+
+Note that this package has now been moved to the ROS navigation_experimental stack, and further development will happen there: https://kforge.ros.org/navigation/experimental
