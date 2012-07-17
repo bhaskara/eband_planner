@@ -29,6 +29,10 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
+find_package(Eigen REQUIRED)
+include_directories(${EIGEN_INCLUDE_DIRS})
+add_definitions(${EIGEN_DEFINITIONS})
+
 # we are using the boost::bind library
 rosbuild_add_boost_directories()
 
