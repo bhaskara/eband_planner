@@ -24,7 +24,6 @@
   <depend package="tf" />
   <depend package="tf_conversions" />
   <depend package="angles"/>
-  <depend package="eigen" />
 
   <depend package="control_toolbox"/>
 
